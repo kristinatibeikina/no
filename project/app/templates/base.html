@@ -1,0 +1,65 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Site</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">О нас</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Услуги</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Контакты</a>
+        </li>
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Пользователь
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'cabinet' %}">Личный кабинет</a></li>
+            <li><a class="dropdown-item" href="{% url 'register' %}">Регистрация</a></li>
+            <li><a class="dropdown-item" href="{% url 'login' %}">Авторизация</a></li>
+            <li><hr class="dropdown-divider"></li>
+             <li><a class="dropdown-item" href="{% url 'product_max' %}">Товары</a></li>
+            <li><a class="dropdown-item" href="{% url 'product_create' %}">Создать товар</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+{% block content%}
+{% if product %}
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-4 col-sm-6 border">
+          <h3 class="d-flex justify-content-center ">{{pro.name}}</h3><br>
+          <img class="d-flex justify-content-center mx-auto " src="{{pro.image.url}}" width="350px" height="400px" ><br>
+          {{pro.type}}<br>
+          {{pro.date}}
+          <p class="d-inline-block text-truncate" style="max-width: 200px;">{{pro.description}}</p>
+        </div>
+      </div>
+    </div>
+
+{% endif%}
+{% endblock%}
+</body>
+</html>

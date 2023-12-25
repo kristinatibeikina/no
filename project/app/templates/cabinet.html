@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+{% block content%}
+<h2>Личный кабинет</h2>
+Пользователь: {{user.username}}<br>
+{% if user.foto %}
+    <img src="{{user.foto.url}}" width="200px" height="200px"><br><br>
+{% endif %}
+<h3>Заказанные товары</h3>
+{{user.basket.product.name}}
+{% endblock%}
