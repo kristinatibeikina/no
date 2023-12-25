@@ -1,7 +1,7 @@
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView, ListView
@@ -21,9 +21,8 @@ class ProductList(generic.ListView):
     fields = ('name', 'description', 'type', 'image', 'date', )
     template_name = 'base.html'
     context_object_name = 'product'
+    paginate_by = 2
 
-    def get_queryset(self):
-        return Product.objects.order_by('-date')[:5]
     
 class RegistrationUserForm(CreateView):
     form_class = RegistrateForm
@@ -39,13 +38,25 @@ class ProductListMax(generic.ListView):
 
 class ProductView(generic.DetailView):
     model = Product
-    fields = ('name', 'description', 'type', 'image')
+    fields = ('name', 'description', 'type', 'image', 'user')
     template_name = 'app/product_list.html'
+
 
 class BasketView(generic.DetailView):
     model = Basket
     template_name = 'cabinet.html'
+    context_object_name = 'basket'
 
 
 def cabinet(request):
     return render(request, 'cabinet.html')
+
+
+class Search(ListView):
+    template_name = 'base.html'
+    def get_queryset(self):
+        return Product.objects.filter(name__icontains=self.request.GET.get('q'))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] =self.request.GET.get

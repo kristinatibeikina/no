@@ -6,5 +6,9 @@
     <img src="{{user.foto.url}}" width="200px" height="200px"><br><br>
 {% endif %}
 <h3>Заказанные товары</h3>
-{{user.basket.product.name}}
+{% for pro in user.basket_set.all %}
+    {{pro.product.name}}<br>
+     <img src="{{pro.product.image.url}}" width="200px" height="200px"><br><br>
+    {{pro.product.description}}
+{% endfor %}
 {% endblock%}

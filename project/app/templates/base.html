@@ -39,16 +39,20 @@
             <li><a class="dropdown-item" href="{% url 'product_create' %}">Создать товар</a></li>
           </ul>
         </li>
-
+        <form action="{% url 'search' %}" method="get">
+            <input name="q" type="search" type="text" placeholder="Поиск продуктов">
+            <button type="submit">Отправить</button>
+        </form>
       </ul>
     </div>
   </div>
+
 </nav>
 {% block content%}
 {% if product %}
     <div class="container">
       <div class="row">
-
+        {% for pro in product %}
         <div class="col-lg-4 col-sm-6 border">
           <h3 class="d-flex justify-content-center ">{{pro.name}}</h3><br>
           <img class="d-flex justify-content-center mx-auto " src="{{pro.image.url}}" width="350px" height="400px" ><br>
@@ -56,10 +60,28 @@
           {{pro.date}}
           <p class="d-inline-block text-truncate" style="max-width: 200px;">{{pro.description}}</p>
         </div>
+          {% endfor %}
       </div>
     </div>
 
 {% endif%}
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock%}
 </body>
 </html>

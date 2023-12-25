@@ -11,4 +11,5 @@ urlpatterns = [
     path('productmax/', ProductListMax.as_view(), name='product_max'),
     path('register/', RegistrationUserForm.as_view(), name='register'),
     path('cabinet/', cabinet, name='cabinet'),
+    path('search/', Search.as_view(), name='search'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
